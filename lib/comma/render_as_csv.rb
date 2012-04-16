@@ -32,18 +32,13 @@ module RenderAsCSV
     content = options[:content]
     style   = options[:style]
 
-    if defined? Rails and (Rails.version.split('.').map(&:to_i) <=> [2,3,5]) < 0
-      render :status => status, :text => Proc.new { |response, output|
-        output.write CSV_HANDLER.generate_line(content.first.to_comma_headers(style))
-        content.each { |line| output.write CSV_HANDLER.generate_line(line.to_comma(style)) }
-      }
-    else
+
       self.status = status
       self.response_body = proc { |response, output|
         output.write CSV_HANDLER.generate_line(content.first.to_comma_headers(style))
         content.each { |line| output.write CSV_HANDLER.generate_line(line.to_comma(style)) }
       }
-    end
+
   end
 end
 #credit : http://ramblingsonrails.com/download-a-large-amount-of-data-in-csv-from-rails
