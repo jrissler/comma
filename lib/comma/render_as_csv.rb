@@ -33,7 +33,7 @@ module RenderAsCSV
     style   = options[:style]
 
 
-      self.status = status
+      #self.status = status
       self.response_body = proc { |response, output|
         output.write CSV_HANDLER.generate_line(content.first.to_comma_headers(style))
         content.each { |line| output.write CSV_HANDLER.generate_line(line.to_comma(style)) }
